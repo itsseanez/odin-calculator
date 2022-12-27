@@ -3,7 +3,8 @@ body {
     padding: 0;
     background-color: #2B3A55;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 #container {
@@ -15,6 +16,23 @@ body {
     margin-top: 50px;
     padding: 0;
     border-radius: 15px;
+}
+
+.current {
+    display: inline;
+    width: 90%;
+    height: 35px;
+}
+
+.equation {
+    display: inline;
+    width: 90%;
+    height: 35px;
+}
+
+footer {
+    display: flex;
+    color: #CE7777;
 }
 
 .input {
@@ -49,4 +67,7 @@ body {
     margin: 20px;
     padding: 0;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
 }
