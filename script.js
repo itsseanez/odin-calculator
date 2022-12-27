@@ -17,5 +17,3 @@ function operate(operation, a, b) {
         return divide(a, b);
     }
 }
-console.log(divide(30,5));
-console.log(operate('+', 30, 5));

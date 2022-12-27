@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #2B3A55;
+    display: flex;
+    justify-content: center;
+}
+
+#container {
+    background-color: #CE7777;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    align-items: center;
+    margin-top: 50px;
+    padding: 0;
+    border-radius: 15px;
+}
+
+.input {
+    background-color: #F2E5E5;
+    width: 80px;
+    border-radius: 5px;
+}
+
+.input.clear {
+    background-color: #E8C4C4;
+    width: 160px;
+}
+
+.input.delete {
+    background-color: #C0DEFF;
+    width: 160px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    height: 50px;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+#screen {
+    background-color: #F2E5E5;
+    width: 90%;
+    height: 70px;
+    margin: 20px;
+    padding: 0;
+    border-radius: 5px;
+}
