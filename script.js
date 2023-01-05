@@ -1,22 +1,48 @@
-let operation = '';
-const add= (a, b) => a + b;
-const subtract= (a, b) => a - b;
-const multiply= (a, b) => a * b;
-const divide= (a, b) => a / b;
-
-function operate(operation, a, b) {
-    if(operation === '+') {
-        return add(a, b);
+function calculate(parseEquation) {
+    // Split the input string into an array of tokens
+    const tokens = parseEquation.split(/\b/);
+  
+    // Initialize the stack for numbers and the stack for operators
+    const numbers = [];
+    const operators = [];
+  
+    // Define a map of operator precedences
+    const precedences = {
+      "x": 2,
+      "/": 2,
+      "+": 1,
+      "-": 1
+    };
+  
+    // Iterate through the tokens
+    for (const token of tokens) {
+      if (!isNaN(token)) {
+        // If the token is a number, push it to the stack
+        numbers.push(parseFloat(token));
+      } else if (token in precedences) {
+        // If the token is an operator,
+        // check the precedence and perform the appropriate action
+        while (operators.length > 0 && precedences[operators[operators.length - 1]] >= precedences[token]) {
+          const op = operators.pop();
+          const b = numbers.pop();
+          const a = numbers.pop();
+          numbers.push(eval(`${a} ${op} ${b}`));
+        }
+        operators.push(token);
+      }
     }
-    else if(operation === '-') {
-        return subtract(a, b);
+  
+    // Evaluate the remaining operators
+    while (operators.length > 0) {
+      const op = operators.pop();
+      const b = numbers.pop();
+      const a = numbers.pop();
+      numbers.push(eval(`${a} ${op} ${b}`));
     }
-    else if(operation === '*') {
-        return multiply(a, b);
-    }
-    else if(operation === '/') {
-        return divide(a, b);
-    }
+  
+    // Return the result
+    console.log(typeof numbers[0])
+    return numbers[0];
 }
 
 //Clears class of all elements
@@ -31,8 +57,8 @@ function deleteNumber(element) {
     element[element.length-1].remove();
 }
 
-//Gets full number input
-function getNumber() {
+//Gets full equation
+function getNumbers() {
     let sum='';
     let number=document.querySelectorAll('.current');
     for(let i=0; i<number.length; i++) {
@@ -41,11 +67,18 @@ function getNumber() {
     return sum;
 }
 
+let parseEquation='';
 const current= document.getElementById('current');
 const equation= document.getElementById('equation');
 const currentText= document.getElementsByClassName('current');
 const equationText= document.getElementsByClassName('equation');
 const buttonClick= document.getElementsByClassName('input');
+
+//Gets number from equation
+/*for(let i=0; i<equationText.length; i++) {
+    parseEquation+=equationText[i].textContent;
+}*/
+
 for (let i=0; i<buttonClick.length; i++) {
     buttonClick[i].addEventListener('click', function(event) {
         const content= document.createElement('p');
@@ -54,13 +87,19 @@ for (let i=0; i<buttonClick.length; i++) {
             (buttonClick[i].textContent === 'x') ||
             (buttonClick[i].textContent === '/')) {
             content.classList.add('equation');
-            content.textContent= getNumber()+buttonClick[i].textContent;
+            content.textContent= getNumbers()+''+buttonClick[i].textContent+'';
             equation.appendChild(content);
             clear(currentText);
         }
         else if (buttonClick[i].textContent === '=') {
+            for(let i=0; i<equationText.length; i++) {
+                parseEquation+=equationText[i].textContent;
+            }
+            //clear(currentText);
             content.classList.add('current');
-            content.textContent= buttonClick[i].textContent;
+            content.textContent= ''+calculate(parseEquation);
+            console.log(parseEquation);
+            console.log(calculate(parseEquation));
             current.appendChild(content);
         }
         else if (buttonClick[i].textContent === 'CLEAR') {
@@ -71,10 +110,9 @@ for (let i=0; i<buttonClick.length; i++) {
             deleteNumber(currentText);
         }
         else {
-            content.classList.add('current');
+            content.classList.add('equation','current');
             content.textContent= buttonClick[i].textContent;
-            current.appendChild(content);
+            equation.appendChild(content);
         }
     });
 }
-console.log(getNumber());
